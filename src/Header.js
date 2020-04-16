@@ -11,3 +11,5 @@ const Header = () => (
         )}
     </ul>
 );
+
+export default Header;

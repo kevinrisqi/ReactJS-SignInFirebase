@@ -21,6 +21,29 @@ const Join = () => {
             });
     };
 
+    const joinGoogle = e => {
+        e.preventDefault();
+        var provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithPopup(provider).then(function (result) {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            var token = result.credential.accessToken;
+            // The signed-in user info.
+            var user = result.user;
+            // Condition True
+            Auth.setLoggedIn(true);
+            // ...
+        }).catch(function (error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // The email of the user's account used.
+            var email = error.email;
+            // The firebase.auth.AuthCredential type that was used.
+            var credential = error.credential;
+            // ...
+        });
+    }
+
     return(
         <div>
             <h1>Join</h1>
@@ -33,14 +56,14 @@ const Join = () => {
                     placeholder="email"
                 />
                 <input
+                    value={password}
                     onChange = {e => setPassword(e.target.value)}
                     name="password"
-                    value={password}
                     type="password"
                     placeholder="password"
                 />
                 <hr/>
-                <button class="googleBtn" type="button">
+                <button className="googleBtn" type="button" onClick={joinGoogle}>
                     <img
                         src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
                         alt="logo"
